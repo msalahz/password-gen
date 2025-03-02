@@ -19,7 +19,7 @@ export default function RangeWithInput(props: RangeWithInput) {
 
         <input
           type="range"
-          className="w-full"
+          className="w-full accent-gray-600"
           name={`${prefix}-input`}
           value={characters}
           min={minCharacters}
@@ -35,7 +35,7 @@ export default function RangeWithInput(props: RangeWithInput) {
         value={characters}
         min={minCharacters}
         max={maxCharacters}
-        className="w-10 appearance-none border-2 border-white p-2 [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+        className="w-10 appearance-none rounded-sm border-2 border-white p-2 text-center [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
       />
     </>
   );
