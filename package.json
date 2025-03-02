@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
+    "nuqs": "^2.4.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
@@ -30,6 +31,7 @@
     "globals": "^15.15.0",
     "prettier": "3.5.2",
     "prettier-plugin-tailwindcss": "^0.6.11",
+    "react-scan": "^0.2.8",
     "tailwindcss": "^4.0.9",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
