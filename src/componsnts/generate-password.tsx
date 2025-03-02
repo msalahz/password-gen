@@ -22,6 +22,16 @@ export default function GeneratePassword() {
 
   const { pass: password, chars: characters, num: hasNumber, symb: hasSymbols } = params;
 
+  function updatePassword() {
+    setParams({
+      pass: generatePassword({
+        characters,
+        hasNumber,
+        hasSymbols,
+      }),
+    });
+  }
+
   return (
     <main className="flex h-dvh items-center justify-center bg-black p-4 text-white">
       <div className="w-1/3">
@@ -31,15 +41,7 @@ export default function GeneratePassword() {
           <button
             title="Rerun"
             className="w-10 cursor-pointer rounded-sm p-1 ring ring-blue-300 hover:ring-2"
-            onClick={() => {
-              setParams({
-                pass: generatePassword({
-                  characters,
-                  hasNumber,
-                  hasSymbols,
-                }),
-              });
-            }}
+            onClick={() => updatePassword()}
           >
             <IconRerun className="h-full w-full bg-transparent stroke-blue-300" />
           </button>
@@ -55,15 +57,9 @@ export default function GeneratePassword() {
             characters={characters}
             minCharacters={MIN_CHARACTERS}
             maxCharacters={MAX_CHARACTERS}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setParams({
-                chars: e.currentTarget.valueAsNumber,
-                pass: generatePassword({
-                  characters: e.currentTarget.valueAsNumber,
-                  hasNumber: true,
-                  hasSymbols: true,
-                }),
-              });
+            onChange={e => {
+              setParams({ chars: e.currentTarget.valueAsNumber });
+              updatePassword();
             }}
           />
         </div>
@@ -77,14 +73,8 @@ export default function GeneratePassword() {
               id="numbers"
               checked={hasNumber}
               onChange={e => {
-                setParams({
-                  num: e.currentTarget.checked,
-                  pass: generatePassword({
-                    characters,
-                    hasNumber: e.currentTarget.checked,
-                    hasSymbols,
-                  }),
-                });
+                setParams({ num: e.currentTarget.checked });
+                updatePassword();
               }}
             />
           </label>
@@ -99,14 +89,8 @@ export default function GeneratePassword() {
               id="symbols"
               checked={hasSymbols}
               onChange={e => {
-                setParams({
-                  symb: e.currentTarget.checked,
-                  pass: generatePassword({
-                    characters,
-                    hasNumber,
-                    hasSymbols: e.currentTarget.checked,
-                  }),
-                });
+                setParams({ symb: e.currentTarget.checked });
+                //updatePassword();
               }}
             />
           </label>

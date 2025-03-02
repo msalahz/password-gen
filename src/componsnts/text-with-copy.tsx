@@ -1,3 +1,5 @@
+import { toast } from 'react-hot-toast';
+
 import IconsCopy from '../assets/icons/icon-copy';
 
 export type TextWithCopy = {
@@ -12,7 +14,10 @@ export default function TextWithCopy(props: TextWithCopy) {
       <button
         title="Copy"
         className="w-10 cursor-pointer rounded-sm p-1 ring ring-blue-300 hover:ring-2"
-        onClick={() => navigator.clipboard.writeText(props.value)}
+        onClick={() => {
+          navigator.clipboard.writeText(props.value);
+          toast('Password copied to clipboard', { duration: 1000 });
+        }}
       >
         <IconsCopy className="h-full w-full bg-transparent stroke-blue-300" />
       </button>

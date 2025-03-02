@@ -2,6 +2,7 @@ import { scan } from 'react-scan';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { NuqsAdapter } from 'nuqs/adapters/react';
+import { Toaster } from 'react-hot-toast';
 
 import App from './app';
 
@@ -14,5 +15,6 @@ createRoot(document.getElementById('root')!).render(
     <NuqsAdapter>
       <App />
     </NuqsAdapter>
+    <Toaster />
   </StrictMode>
 );
