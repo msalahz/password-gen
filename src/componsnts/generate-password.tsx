@@ -1,10 +1,4 @@
-import {
-  useQueryStates,
-  parseAsInteger,
-  parseAsBoolean,
-  parseAsString,
-} from 'nuqs';
-
+import { useQueryStates, parseAsInteger, parseAsBoolean, parseAsString } from 'nuqs';
 import IconRerun from '../assets/icons/icon-rerun';
 import TextWithCopy from './text-with-copy';
 import generatePassword from '../utils/generate-password';
@@ -26,19 +20,12 @@ export default function GeneratePassword() {
     }
   );
 
-  const {
-    pass: password,
-    chars: characters,
-    num: hasNumber,
-    symb: hasSymbols,
-  } = params;
+  const { pass: password, chars: characters, num: hasNumber, symb: hasSymbols } = params;
 
   return (
     <main className="flex h-dvh items-center justify-center bg-black p-4 text-white">
       <div className="w-1/3">
-        <h1 className="border-b-2 border-b-blue-500 text-center text-2xl font-bold uppercase">
-          Generate Password
-        </h1>
+        <h1 className="border-b-2 border-b-blue-500 text-center text-2xl font-bold uppercase">Generate Password</h1>
 
         <div className="my-4 grid grid-cols-[auto_1fr_auto] items-center gap-2">
           <button
@@ -68,13 +55,13 @@ export default function GeneratePassword() {
             characters={characters}
             minCharacters={MIN_CHARACTERS}
             maxCharacters={MAX_CHARACTERS}
-            onChange={e => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setParams({
                 chars: e.currentTarget.valueAsNumber,
                 pass: generatePassword({
                   characters: e.currentTarget.valueAsNumber,
-                  hasNumber,
-                  hasSymbols,
+                  hasNumber: true,
+                  hasSymbols: true,
                 }),
               });
             }}
@@ -82,15 +69,13 @@ export default function GeneratePassword() {
         </div>
 
         <div className="my-4 w-full">
-          <label
-            htmlFor="numbers"
-            className="flex items-center justify-between gap-2"
-          >
+          <label htmlFor="numbers" className="flex items-center justify-between gap-2">
             Numbers
             <input
               type="checkbox"
               name="numbers"
               id="numbers"
+              checked={hasNumber}
               onChange={e => {
                 setParams({
                   num: e.currentTarget.checked,
@@ -106,15 +91,13 @@ export default function GeneratePassword() {
         </div>
 
         <div className="my-4 w-full">
-          <label
-            htmlFor="symbols"
-            className="flex items-center justify-between gap-2"
-          >
+          <label htmlFor="symbols" className="flex items-center justify-between gap-2">
             Symbols
             <input
               type="checkbox"
               name="symbols"
               id="symbols"
+              checked={hasSymbols}
               onChange={e => {
                 setParams({
                   symb: e.currentTarget.checked,

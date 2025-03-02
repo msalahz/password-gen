@@ -7,12 +7,7 @@ export type TextWithCopy = {
 export default function TextWithCopy(props: TextWithCopy) {
   return (
     <>
-      <input
-        readOnly
-        type="text"
-        value={props.value}
-        className="border-1 rounded-sm border-white p-2 outline-0"
-      />
+      <input readOnly type="text" value={props.value} className="border-1 rounded-sm border-white p-2 outline-0" />
 
       <button
         title="Copy"

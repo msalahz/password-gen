@@ -13,8 +13,7 @@ export default function generatePassword(options: GeneratePasswordOptions = {}) 
   return new Array(characters)
     .fill(0)
     .map(() => {
-      const allChars =
-        CHARACTERS + (hasNumber ? NUMBERS : '') + (hasSymbols ? SYMBOLS : '');
+      const allChars = CHARACTERS + (hasNumber ? NUMBERS : '') + (hasSymbols ? SYMBOLS : '');
       return allChars[Math.floor(Math.random() * allChars.length)];
     })
     .join('');

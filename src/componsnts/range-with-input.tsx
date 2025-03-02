@@ -14,11 +14,7 @@ export default function RangeWithInput(props: RangeWithInput) {
 
   return (
     <>
-      <label
-        id={`${prefix}-label`}
-        htmlFor={`${prefix}-input`}
-        className="flex grid-cols-1 items-center gap-2"
-      >
+      <label id={`${prefix}-label`} htmlFor={`${prefix}-input`} className="flex grid-cols-1 items-center gap-2">
         {label ?? ''}
 
         <input
