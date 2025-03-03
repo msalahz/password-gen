@@ -35,7 +35,7 @@ export default function GenerateForm() {
   }
 
   return (
-    <form className="border-1 w-1/3 rounded-md border-gray-700 bg-black/30 p-4">
+    <form className="border-1 h-fit w-1/3 rounded-md border-gray-700 bg-black/30 p-4">
       <div className="mb-4 flex items-center justify-between">
         <button
           type="button"
