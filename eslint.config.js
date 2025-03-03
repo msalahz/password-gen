@@ -30,10 +30,6 @@ export default tseslint.config(
     },
     rules: {
       'react-compiler/react-compiler': 'error',
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
     },
   },
   prettierConfig
