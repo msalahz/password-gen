@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://msalahz.github.io/password-gen/",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -10,10 +11,13 @@
     "lint:fix": "eslint . --fix",
     "preview": "vite preview",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "predeploy": "pnpm build",
+    "deply": "gh-pages -d dist"
   },
   "dependencies": {
     "clsx": "^2.1.1",
+    "gh-pages": "^6.3.0",
     "nuqs": "^2.4.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
