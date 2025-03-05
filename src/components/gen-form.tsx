@@ -16,8 +16,12 @@ export function GenFrom({ className, ...props }: React.ComponentProps<'div'>) {
     default_password: generatePassword(),
     default_chars: MIN_CHARACTERS,
     default_num: false,
-    default_symb: false,
+    default_symbol: false,
   });
+
+  async function updatePassword() {
+    await setParams({ pass: generatePassword({ characters, hasNumber, hasSymbols }) });
+  }
 
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
@@ -28,21 +32,19 @@ export function GenFrom({ className, ...props }: React.ComponentProps<'div'>) {
         </CardHeader>
 
         <CardContent>
-          <form>
+          <div>
             <div className="grid gap-6">
               <div className="grid gap-6">
                 <div className="grid grid-cols-[auto_1fr_auto] gap-5">
-                  <Label htmlFor="characters">Characters</Label>
+                  <Label>Characters</Label>
                   <Slider
-                    id="characters"
+                    name="characters"
                     min={MIN_CHARACTERS}
                     max={MAX_CHARACTERS}
                     value={[characters]}
-                    onValueChange={([value]) => {
-                      setParams({
-                        chars: value,
-                        pass: generatePassword({ characters: value, hasNumber, hasSymbols }),
-                      });
+                    onValueChange={async ([value]) => {
+                      await setParams({ chars: value });
+                      await updatePassword();
                     }}
                   />
                   <Input id="characters-input" type="input" className="w-11" readOnly value={characters} />
@@ -53,12 +55,10 @@ export function GenFrom({ className, ...props }: React.ComponentProps<'div'>) {
                   <Switch
                     id="numbers"
                     checked={hasNumber}
-                    onCheckedChange={checked =>
-                      setParams({
-                        num: checked,
-                        pass: generatePassword({ characters, hasNumber: checked, hasSymbols }),
-                      })
-                    }
+                    onCheckedChange={async checked => {
+                      await setParams({ num: checked });
+                      await updatePassword();
+                    }}
                   />
                 </div>
 
@@ -67,12 +67,10 @@ export function GenFrom({ className, ...props }: React.ComponentProps<'div'>) {
                   <Switch
                     id="symbols"
                     checked={hasSymbols}
-                    onCheckedChange={checked =>
-                      setParams({
-                        symb: checked,
-                        pass: generatePassword({ characters, hasNumber, hasSymbols: checked }),
-                      })
-                    }
+                    onCheckedChange={async checked => {
+                      await setParams({ symbol: checked });
+                      await updatePassword();
+                    }}
                   />
                 </div>
 
@@ -80,11 +78,11 @@ export function GenFrom({ className, ...props }: React.ComponentProps<'div'>) {
                   <div className="flex items-center justify-center">
                     <Label htmlFor="password">Password</Label>
                   </div>
-                  <Input id="password" type="input" readOnly value={password} className="text-center" />{' '}
+                  <Input id="password" type="input" readOnly value={password} className="text-center" />
                 </div>
               </div>
             </div>
-          </form>
+          </div>
         </CardContent>
 
         <CardFooter className="flex justify-between">
@@ -101,8 +99,11 @@ export function GenFrom({ className, ...props }: React.ComponentProps<'div'>) {
 
           <Button
             onClick={() => {
-              navigator.clipboard.writeText(password);
-              toast('Password copied to clipboard');
+              toast.promise(navigator.clipboard.writeText(password), {
+                loading: 'Copying password...',
+                error: 'Failed to copy password',
+                success: 'Password copied to clipboard',
+              });
             }}
           >
             <Copy /> Copy

@@ -9,7 +9,9 @@ import { ThemeProvider } from '@/components/theme-provider';
 
 import '@/styles.css';
 
-scan({ enabled: true });
+if (import.meta.env.MODE === 'development') {
+  scan({ enabled: true });
+}
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
