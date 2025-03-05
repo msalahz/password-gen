@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client';
 import { NuqsAdapter } from 'nuqs/adapters/react';
 import { Toaster } from 'react-hot-toast';
 
-import App from './app';
+import App from './application';
 
 import './styles.css';
 
