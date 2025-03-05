@@ -1,0 +1,66 @@
+name: React Vite CI/CD
+
+on:
+  push:
+    branches:
+      - '*' # Run on all branches
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4.1.0
+        with:
+          version: 10
+          run_install: false
+
+      - name: Install Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Eslint code quality check
+        run: pnpm lint
+
+      - name: Prettier code quality check
+        run: pnpm format:check
+
+      - name: Build
+        run: pnpm build
+        
+      - name: Uploading build artifacts
+        uses: actions/upload-artifact@v2
+        if: github.ref == 'refs/heads/main'
+        with:
+          name: build-artifacts
+          path: ./dist
+
+  Deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: build-artifacts
+          path: ./dist
+
+      - name: Deploy to github-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
