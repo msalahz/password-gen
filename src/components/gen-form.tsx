@@ -1,27 +1,21 @@
-import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import { Copy, RotateCw } from 'lucide-react';
+import { useNavigate, useSearch } from '@tanstack/react-router';
+
+import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Copy, RotateCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { generatePassword } from '@/lib/generate-password';
-import { useQueryParams } from '@/hooks/use-query-params';
 import { MAX_CHARACTERS, MIN_CHARACTERS } from '@/lib/constants';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 
 export function GenFrom({ className, ...props }: React.ComponentProps<'div'>) {
-  const { password, characters, hasNumber, hasSymbols, setParams } = useQueryParams({
-    default_password: generatePassword(),
-    default_chars: MIN_CHARACTERS,
-    default_num: false,
-    default_symbol: false,
-  });
-
-  async function updatePassword() {
-    await setParams({ pass: generatePassword({ characters, hasNumber, hasSymbols }) });
-  }
+  const search = useSearch({ from: '/' });
+  const navigate = useNavigate({ from: '/' });
+  const { password, characters, hasNumbers, hasSymbols } = search;
 
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
@@ -43,8 +37,14 @@ export function GenFrom({ className, ...props }: React.ComponentProps<'div'>) {
                     max={MAX_CHARACTERS}
                     value={[characters]}
                     onValueChange={async ([value]) => {
-                      await setParams({ chars: value });
-                      await updatePassword();
+                      await navigate({
+                        search: {
+                          characters: value,
+                          password: generatePassword({ characters: value, hasNumbers, hasSymbols }),
+                          hasNumbers,
+                          hasSymbols,
+                        },
+                      });
                     }}
                   />
                   <Input id="characters-input" type="input" className="w-11" readOnly value={characters} />
@@ -54,10 +54,16 @@ export function GenFrom({ className, ...props }: React.ComponentProps<'div'>) {
                   <Label htmlFor="numbers">Numbers</Label>
                   <Switch
                     id="numbers"
-                    checked={hasNumber}
+                    checked={hasNumbers}
                     onCheckedChange={async checked => {
-                      await setParams({ num: checked });
-                      await updatePassword();
+                      await navigate({
+                        search: {
+                          hasNumbers: checked,
+                          password: generatePassword({ characters, hasNumbers: checked, hasSymbols }),
+                          characters,
+                          hasSymbols,
+                        },
+                      });
                     }}
                   />
                 </div>
@@ -68,8 +74,14 @@ export function GenFrom({ className, ...props }: React.ComponentProps<'div'>) {
                     id="symbols"
                     checked={hasSymbols}
                     onCheckedChange={async checked => {
-                      await setParams({ symbol: checked });
-                      await updatePassword();
+                      await navigate({
+                        search: {
+                          hasSymbols: checked,
+                          password: generatePassword({ characters, hasNumbers, hasSymbols: checked }),
+                          characters,
+                          hasNumbers,
+                        },
+                      });
                     }}
                   />
                 </div>
@@ -88,9 +100,14 @@ export function GenFrom({ className, ...props }: React.ComponentProps<'div'>) {
         <CardFooter className="flex justify-between">
           <Button
             variant="outline"
-            onClick={() =>
-              setParams({
-                pass: generatePassword({ characters, hasNumber, hasSymbols }),
+            onClick={async () =>
+              await navigate({
+                search: {
+                  password: generatePassword({ characters, hasNumbers, hasSymbols }),
+                  characters,
+                  hasNumbers,
+                  hasSymbols,
+                },
               })
             }
           >

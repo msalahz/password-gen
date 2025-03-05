@@ -4,17 +4,17 @@ const SYMBOLS = '!@#$%^&*()_+';
 
 export type GeneratePasswordOptions = {
   characters?: number;
-  hasNumber?: boolean;
+  hasNumbers?: boolean;
   hasSymbols?: boolean;
 };
 
 export function generatePassword(options: GeneratePasswordOptions = {}) {
-  const { characters = 8, hasNumber = false, hasSymbols = false } = options;
+  const { characters = 8, hasNumbers = false, hasSymbols = false } = options;
 
   return new Array(characters)
     .fill(0)
     .map(() => {
-      const allChars = CHARACTERS + (hasNumber ? NUMBERS : '') + (hasSymbols ? SYMBOLS : '');
+      const allChars = CHARACTERS + (hasNumbers ? NUMBERS : '') + (hasSymbols ? SYMBOLS : '');
       return allChars[Math.floor(Math.random() * allChars.length)];
     })
     .join('');
