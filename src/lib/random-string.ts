@@ -1,4 +1,4 @@
-export default function randomString(length: number) {
+export function randomString(length: number) {
   const CHARACTERS = 'abcdefghijklmnopqrstuvwxyz';
 
   return new Array(length)
