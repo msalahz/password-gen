@@ -10,7 +10,7 @@ export type GeneratePasswordOptions = {
 
 export function generatePassword(options: GeneratePasswordOptions = {}) {
   const { characters = 8, hasNumber = false, hasSymbols = false } = options;
-  
+
   return new Array(characters)
     .fill(0)
     .map(() => {
