@@ -1,6 +1,59 @@
 # Password Generator Web Tool
 
-A simple password generator web tool build with React 
+A simple, user-friendly password generator built with React, TypeScript, and Vite.
+
+## 🔗 Live Demo
+
+Try it now: [Password Generator](https://msalahz.github.io/password-gen/)
+
+## ✨ Features
+
+- Generate secure passwords with customizable options
+- Adjust password length
+- Include/exclude uppercase letters, lowercase letters, numbers, and special characters
+- Copy passwords to clipboard with one click
+- Modern, responsive UI
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+  ```bash
+  git clone https://github.com/msalahz/password-gen.git
+  cd password-gen
+  ```
+
+2. Install dependencies:
+  ```bash
+  npm install
+  # or
+  yarn install
+  ```
+
+3. Run the development server:
+  ```bash
+  npm run dev
+  # or
+  yarn dev
+  ```
+
+4. Open your browser and navigate to `http://localhost:5173`
+
+## 🛠️ Built With
+
+- [React](https://reactjs.org/) - UI library
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [Vite](https://vitejs.dev/) - Build tool and development server
+
+## 📝 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 
 # React + TypeScript + Vite
